@@ -1,28 +1,23 @@
-import { useNavigate } from "react-router-dom";
 import checkPermission from "@/helpers/checkPermissions";
 import IRouteConfig from "@/types/IRouteConfig";
-import nav from "@/router/nav";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import useNav from "@/router/useNav";
 
 const SecureRouteElement: React.FC<React.PropsWithChildren<{ route: IRouteConfig }>> = ({ route, children }) => {
     const queryClient = useQueryClient();
-    const navigate = useNavigate();
+    const nav = useNav();
     
     React.useEffect(() => {
-        const user = queryClient.getQueryData(["user"]);
+    if (!queryClient.getQueryData(["user"])) {
+        nav.login.go({}, { replace: true });
+        return;
+    }
 
-        if (!user) {
-            navigate(nav.login.get(), { replace: true });
-        }
-    }, []);
-
-    React.useEffect(() => {
-        const hasPermission = checkPermission(route);
-        
-        if (!hasPermission) {
-            navigate(nav.forbidden.get(), { replace: true });
-        }
+    const hasPermission = checkPermission(route);
+    if (!hasPermission) {
+        nav.forbidden.go({}, { replace: true });
+    }
     }, [route]);
 
     const { isPending } = useQuery({

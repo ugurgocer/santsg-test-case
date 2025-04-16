@@ -30,7 +30,7 @@ const routes: RouteConfig[] = [
     path: '/posts',
     renderer: {
       type: 'lazy',
-      element: () => import('@/pages/Post'),
+      element: () => import('@/pages/Posts'),
     },
     permissions: [EPermissions.VIEW_POSTS],
     translations
