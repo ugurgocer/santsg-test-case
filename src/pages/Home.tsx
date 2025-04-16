@@ -37,7 +37,7 @@ const CommentList: React.FC = () => {
     const { data, isLoading } = useQuery({ queryKey: ["comments", 5], queryFn:() => getComments(5) });
 
     if (isLoading) {
-        return "Posts Loading...";
+        return "Comments Loading...";
     }
 
     return (
@@ -45,11 +45,11 @@ const CommentList: React.FC = () => {
             header="Comments"
         >
             <List>
-                {data?.map((post) => (
+                {data?.map((comment) => (
                     <List.Item
-                        key={post.id}
-                        title={post.name + " - " + post.email}
-                        description={post.body}
+                        key={comment.id}
+                        title={comment.name + " - " + comment.email}
+                        description={comment.body}
                     />
                 ))}
             </List>

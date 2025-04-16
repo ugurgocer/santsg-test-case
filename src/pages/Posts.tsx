@@ -14,18 +14,13 @@ const Posts: React.FC = () => {
     const deletePostMutation = useMutation({
         mutationFn: (id: number) => deletePost(id).then(() => id),
         onSuccess: (deletedId) => {
-        queryClient.setQueryData(['posts'], (oldData: IPost[]) => {
-            return oldData?.filter((post: any) => post.id !== deletedId) || [];
-        });
+            queryClient.setQueryData(['posts'], (oldData: IPost[]) => oldData?.filter((post) => post.id !== deletedId) || []);
+            queryClient.invalidateQueries({ queryKey: ["post", deletedId] });
         },
     });
 
     const handleEdit = (id: number) => {
         nav.editPost.go({ id });
-    }
-
-    const handleDelete = async (id: number) => {
-        deletePostMutation.mutate(id);
     }
 
     if(isLoading) return <div>Loading...</div>
@@ -52,7 +47,7 @@ const Posts: React.FC = () => {
                                 {
                                     key: "delete",
                                     title: "Delete",
-                                    onClick: () => handleDelete(post.id)
+                                    onClick: () => deletePostMutation.mutate(post.id)
                                 }
                             ]
                         }

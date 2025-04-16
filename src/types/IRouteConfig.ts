@@ -9,4 +9,5 @@ export default interface IRouteConfig {
     };
     permissions?: EPermissions[];
     translations?: () => Promise<any>;
+    children?: IRouteConfig[];
 }

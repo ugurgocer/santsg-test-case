@@ -43,18 +43,31 @@ const routes: RouteConfig[] = [
       element: () => import('@/pages/Post'),
     },
     permissions: [EPermissions.VIEW_POSTS],
-    translations
+    translations,
+    children: [
+      {
+        name: 'editPost',
+        path: '/post/:id/edit',
+        renderer: {
+          type: 'lazy',
+          element: () => import('@/pages/Post/Edit'),
+        },
+        permissions: [EPermissions.EDIT_POST],
+        translations
+      },
+      {
+        name: 'postComments',
+        path: '/post/:id/comments',
+        renderer: {
+          type: 'lazy',
+          element: () => import('@/pages/Post/Comments'),
+        },
+        permissions: [EPermissions.VIEW_COMMENTS],
+        translations
+      }
+    ]
   },
-  {
-    name: 'editPost',
-    path: '/post/:id/edit',
-    renderer: {
-      type: 'lazy',
-      element: () => import('@/pages/Post/Edit'),
-    },
-    permissions: [EPermissions.EDIT_POST],
-    translations
-  },
+
   {
     name: 'createPost',
     path: '/post/create',
@@ -63,16 +76,6 @@ const routes: RouteConfig[] = [
       element: () => import('@/pages/Post/Create'),
     },
     permissions: [EPermissions.CREATE_POST],
-    translations
-  },
-  {
-    name: 'postComments',
-    path: '/post/:id/comments',
-    renderer: {
-      type: 'lazy',
-      element: () => import('@/pages/Post/Comments'),
-    },
-    permissions: [EPermissions.VIEW_COMMENTS],
     translations
   },
   {
