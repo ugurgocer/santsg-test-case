@@ -1,8 +1,9 @@
 import HomePage from '@/pages/Home';
 import type RouteConfig from '@/types/IRouteConfig';
 import EPermissions from '@/types/EPermissions';
+import Forbidden from '@/pages/errors/Forbidden';
 
-const translations = () => Promise.resolve();
+const translations = () => Promise.resolve(true);
 
 const routes: RouteConfig[] = [
   {
@@ -10,7 +11,7 @@ const routes: RouteConfig[] = [
     path: '/',
     renderer: {
       type: 'element',
-      component: HomePage,
+      element: HomePage,
     },
     permissions: [EPermissions.VIEW_POSTS, EPermissions.VIEW_COMMENTS],
     translations
@@ -20,7 +21,7 @@ const routes: RouteConfig[] = [
     path: '/login',
     renderer: {
       type: 'lazy',
-      component: () => import('@/pages/Login'),
+      element: () => import('@/pages/Login'),
     },
     translations
   },
@@ -29,7 +30,7 @@ const routes: RouteConfig[] = [
     path: '/posts',
     renderer: {
       type: 'lazy',
-      component: () => import('@/pages/Post'),
+      element: () => import('@/pages/Post'),
     },
     permissions: [EPermissions.VIEW_POSTS],
     translations
@@ -39,7 +40,7 @@ const routes: RouteConfig[] = [
     path: '/post/:id',
     renderer: {
       type: 'lazy',
-      component: () => import('@/pages/Post'),
+      element: () => import('@/pages/Post'),
     },
     permissions: [EPermissions.VIEW_POSTS],
     translations
@@ -49,7 +50,7 @@ const routes: RouteConfig[] = [
     path: '/post/:id/edit',
     renderer: {
       type: 'lazy',
-      component: () => import('@/pages/Post/Edit'),
+      element: () => import('@/pages/Post/Edit'),
     },
     permissions: [EPermissions.EDIT_POST],
     translations
@@ -59,7 +60,7 @@ const routes: RouteConfig[] = [
     path: '/post/create',
     renderer: {
       type: 'lazy',
-      component: () => import('@/pages/Post/Create'),
+      element: () => import('@/pages/Post/Create'),
     },
     permissions: [EPermissions.CREATE_POST],
     translations
@@ -69,7 +70,7 @@ const routes: RouteConfig[] = [
     path: '/post/:id/comments',
     renderer: {
       type: 'lazy',
-      component: () => import('@/pages/Post/Comments'),
+      element: () => import('@/pages/Post/Comments'),
     },
     permissions: [EPermissions.VIEW_COMMENTS],
     translations
@@ -78,11 +79,19 @@ const routes: RouteConfig[] = [
     name: 'forbidden',
     path: '/403',
     renderer: {
-      type: 'lazy',
-      component: () => import('@/pages/errors/Forbidden'),
+      type: 'element',
+      element: Forbidden,
     },
     translations
-  }
+  },
+  {
+  name: 'notFound',
+  path: '*',
+  renderer: {
+    type: 'element',
+    element: Forbidden,
+  },
+}
 ];
 
 export default routes;

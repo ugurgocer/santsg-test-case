@@ -1,12 +1,12 @@
-import EPermissions from "./EPermissions";
+import EPermissions from "@/types/EPermissions";
 
 export default interface IRouteConfig {
     name: string;
     path: string;
     renderer: {
       type: "element" | "lazy";
-      component: React.ComponentType | (() => Promise<{ default: React.ComponentType }>);
+      element: React.ComponentType | (() => Promise<{ default: React.ComponentType }>);
     };
     permissions?: EPermissions[];
-    translations?: () => Promise<void>;
+    translations?: () => Promise<any>;
 }
