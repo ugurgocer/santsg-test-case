@@ -1,10 +1,10 @@
 import HomePage from '@/pages/Home';
 import type RouteConfig from '@/types/IRouteConfig';
-import EPermissions from './types/EPermissions';
+import EPermissions from '@/types/EPermissions';
 
 const translations = () => Promise.resolve();
 
-export const routes: RouteConfig[] = [
+const routes: RouteConfig[] = [
   {
     name: 'home',
     path: '/',
@@ -84,3 +84,5 @@ export const routes: RouteConfig[] = [
     translations
   }
 ];
+
+export default routes;
