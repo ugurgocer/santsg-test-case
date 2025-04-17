@@ -17,7 +17,7 @@ const PostList: React.FC = () => {
     return (
         <Card
             header="Posts"
-            footer={<Link to={nav.posts.get()}>See all posts</Link>}
+            footer={<Link className="text-blue-500 hover:text-blue-600" to={nav.posts.get()}>See all posts</Link>}
         >
             <List>
                 {data?.map((post) => (
@@ -59,10 +59,10 @@ const CommentList: React.FC = () => {
 
 const Home: React.FC = () => {
     return (
-        <>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <PostList />
             <CommentList />
-        </>
+        </div>
     )
 }
 

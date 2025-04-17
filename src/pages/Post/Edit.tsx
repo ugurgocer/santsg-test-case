@@ -23,7 +23,7 @@ const EditPost: React.FC = () => {
     });
 
     return (
-        <Card header="Create Post">
+        <Card header="Edit Post">
             <PostForm data={data} onSubmit={createPostMutation.mutate} />
         </Card>
     )

@@ -5,6 +5,7 @@ import useNav from "@/router/useNav";
 import deletePost from "@/api/Post/deletePost";
 import IPost from "@/types/IPost";
 import Card from "@/components/Card";
+import Button from "@/components/Button";
 
 const Posts: React.FC = () => {
     const queryClient = useQueryClient();
@@ -28,7 +29,8 @@ const Posts: React.FC = () => {
     return (
         <Card
             header="Posts"
-            extra={<button onClick={() => nav.createPost.go()}>Create Post</button>}
+            extra={<Button title="Create" onClick={() => nav.createPost.go()} />}
+            className="h-full"
         >
             <List>
                 {data?.map((post) => (
@@ -42,11 +44,13 @@ const Posts: React.FC = () => {
                                 {
                                     key: "edit",
                                     title: "Edit",
+                                    type: "primary",
                                     onClick: () => handleEdit(post.id)
                                 },
                                 {
                                     key: "delete",
                                     title: "Delete",
+                                    type: "danger",
                                     onClick: () => deletePostMutation.mutate(post.id)
                                 }
                             ]

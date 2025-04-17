@@ -20,16 +20,22 @@ const PostForm: React.FC<IProps> = ({ data, onSubmit }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-10 py-6">
             <div>
                 <label htmlFor="title">Title: </label>
-                <input type="text" id="title" name="title" defaultValue={data?.title}/>
+                <input type="text" className="p-2 block w-full border border-gray-200 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500" id="title" name="title" defaultValue={data?.title}/>
             </div>
             <div>
                 <label htmlFor="body">Body: </label>
-                <textarea id="body" name="body" defaultValue={data?.body}></textarea>
+                <textarea 
+                    id="body"
+                    className="p-2 block w-full border border-gray-200 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-none"
+                    name="body"
+                    rows={5}
+                    defaultValue={data?.body}
+                />
             </div>
-            <button type="submit">Submit</button>
+            <input type="submit" value="Submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded py-1 px-2 cursor-pointer" />
         </form>
     );
 }

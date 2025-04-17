@@ -1,4 +1,7 @@
+import Button from "@/components/Button";
+
 type ItemButtons = {
+    type?: "default" | "danger" | "primary"
     key: number | string;
     title: string;
     onClick: (key: number | string) => void;
@@ -14,27 +17,31 @@ type ItemProps = {
 
 const ListItem = ({ onClick, ...item }: ItemProps) => {
     return (
-        <li key={item.key} onClick={() => onClick?.(item.key)}>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            {item.buttons?.map((button) => (
-                <button
-                    key={button.key}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        button.onClick(item.key);
-                    }}
-                >
-                    {button.title}
-                </button>
-            ))}
+        <li className="bg-white hover:bg-gray-100 flex flex-row justify-between items-center border-b border-gray-300 p-2" key={item.key} onClick={() => onClick?.(item.key)}>
+            <div id="content" className="flex flex-col gap-2">
+                <h3 className="font-semibold text-gray-800">{item.title}</h3>
+                <p title={item.description} className="font-light text-gray-700 line-clamp-1">{item.description}</p>
+            </div>
+            <div id="buttons" className="flex flex-row gap-2 items-center">
+                {item.buttons?.map(({ key, title, onClick, type }) => (
+                    <Button
+                        key={key}
+                        title={title}
+                        type={type}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClick(item.key);
+                        }}
+                    />
+                ))}
+            </div>
         </li>
     )
 }
 
 const List = ({ children }: React.PropsWithChildren) => {
   return (
-    <ul>
+    <ul className="flex flex-col">
         {children}
     </ul>
   );
