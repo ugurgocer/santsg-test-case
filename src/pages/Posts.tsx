@@ -6,25 +6,31 @@ import deletePost from "@/api/Post/deletePost";
 import IPost from "@/types/IPost";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 const Posts: React.FC = () => {
     const queryClient = useQueryClient();
     const nav = useNav();
 
-    const { data, isLoading } = useQuery({ queryKey: ["posts"], queryFn:() => getPosts() });
+    const { data, isLoading } = useQuery({
+        queryKey: ["posts"],
+        queryFn:() => getPosts(),
+        staleTime: 1000 * 30,
+        gcTime: 1000 * 60 * 5
+    });
     const deletePostMutation = useMutation({
         mutationFn: (id: number) => deletePost(id).then(() => id),
         onSuccess: (deletedId) => {
             queryClient.setQueryData(['posts'], (oldData: IPost[]) => oldData?.filter((post) => post.id !== deletedId) || []);
             queryClient.invalidateQueries({ queryKey: ["post", deletedId] });
-        },
+        }
     });
 
     const handleEdit = (id: number) => {
         nav.editPost.go({ id });
     }
 
-    if(isLoading) return <div>Loading...</div>
+    if(isLoading) return <Spinner text="Posts loading" />
 
     return (
         <Card

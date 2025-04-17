@@ -3,6 +3,7 @@ import IRouteConfig from "@/types/IRouteConfig";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import useNav from "@/router/useNav";
+import Spinner from "@/components/Spinner";
 
 const SecureRouteElement: React.FC<React.PropsWithChildren<{ route: IRouteConfig }>> = ({ route, children }) => {
     const queryClient = useQueryClient();
@@ -26,7 +27,7 @@ const SecureRouteElement: React.FC<React.PropsWithChildren<{ route: IRouteConfig
     });
     
     if (isPending) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     return <>{children}</>

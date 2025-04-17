@@ -3,13 +3,14 @@ import getPostComments from "@/api/Comment/getPostComments";
 import { useParams } from "react-router-dom";
 import Card from "@/components/Card";
 import List from "@/components/List";
+import Spinner from "@/components/Spinner";
 
 const PostComments: React.FC = () => {
     const { id } = useParams();
-    const { data, isLoading } = useQuery({ queryKey: ["post", id, "comments"], queryFn:() => getPostComments(id as string) });
+    const { data, isLoading } = useQuery({ queryKey: ["post"+id+"comments"], queryFn:() => getPostComments(id as string) });
 
     if (isLoading) {
-        return "Comments Loading...";
+        return <Spinner text="Comments Loading" />
     }
 
     return (

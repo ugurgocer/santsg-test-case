@@ -5,6 +5,7 @@ import IPost from "@/types/IPost";
 import PostForm from "@/forms/PostForm";
 import Card from "@/components/Card";
 import editPost from "@/api/Post/editPost";
+import Spinner from "@/components/Spinner";
 
 const EditPost: React.FC = () => {
     const { id } = useParams(); 
@@ -12,10 +13,10 @@ const EditPost: React.FC = () => {
     const queryClient = useQueryClient();
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <Spinner text="Form Loading" />
     }
 
-    const createPostMutation = useMutation({
+    const editPostMutation = useMutation({
         mutationFn: (post: IPost) => editPost(post),
         onSuccess: (newPost) => {
             queryClient.setQueryData(['post'+newPost.id], newPost);
@@ -24,7 +25,7 @@ const EditPost: React.FC = () => {
 
     return (
         <Card header="Edit Post">
-            <PostForm data={data} onSubmit={createPostMutation.mutate} />
+            <PostForm data={data} onSubmit={editPostMutation.mutate} loading={editPostMutation.isPending} />
         </Card>
     )
 }

@@ -20,7 +20,7 @@ const CreatePost: React.FC = () => {
 
     return (
         <Card header="Create Post">
-            <PostForm onSubmit={createPostMutation.mutate} />
+            <PostForm onSubmit={createPostMutation.mutate} loading={createPostMutation.isPending} />
         </Card>
     )
 }

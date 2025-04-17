@@ -29,7 +29,7 @@ const Layout: React.FC<React.PropsWithChildren>= ({ children }) => {
     return (
         <div className="flex flex-col h-screen">
             <header className="px-6 py-3 flex items-center justify-between shadow-sm h-16 bg-white z-10">
-                <h1 className="text-blue-800 hover:text-blue-900 text-2xl font-bold cursor-pointer" onClick={user ? () => nav.home.go() : undefined}>SANTSG Test Case</h1>
+                <h1 className="text-blue-700 hover:text-blue-800 text-2xl font-bold cursor-pointer" onClick={user ? () => nav.home.go() : undefined}>SANTSG Test Case</h1>
                 {userInfo()}
             </header>
             <main className="py-4 px-6 flex-1 overflow-y-auto bg-gray-50">

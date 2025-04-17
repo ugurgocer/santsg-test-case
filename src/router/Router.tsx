@@ -3,6 +3,7 @@ import React from 'react';
 import routes from '@/router/routes';
 import SecureRouteElement from '@/router/SecureRouteElement';
 import IRouteConfig from '@/types/IRouteConfig';
+import Spinner from '@/components/Spinner';
 
 const generateRoute = (route: IRouteConfig) => {
     let element;
@@ -11,7 +12,7 @@ const generateRoute = (route: IRouteConfig) => {
         const LazyComponent = React.lazy(route.renderer.element as (() => Promise<{ default: React.ComponentType }>));
         
         element = (
-            <React.Suspense fallback={<div>Loading...</div>}>
+            <React.Suspense fallback={<Spinner />}>
                 <SecureRouteElement route={route}>
                     <LazyComponent />
                 </SecureRouteElement>

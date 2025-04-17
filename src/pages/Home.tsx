@@ -5,13 +5,14 @@ import getPosts from "@/api/Post/getPosts";
 import { Link } from "react-router-dom";
 import useNav from "@/router/useNav";
 import getComments from "@/api/Comment/getComments";
+import Spinner from "@/components/Spinner";
 
 const PostList: React.FC = () => {
     const nav = useNav();
-    const { data, isLoading } = useQuery({ queryKey: ["posts", 5], queryFn:() => getPosts(5) });
+    const { data, isLoading } = useQuery({ queryKey: ["dashboardPosts"], queryFn:() => getPosts(5) });
 
     if (isLoading) {
-        return "Posts Loading...";
+        return <Spinner text="Posts Loading" />
     }
 
     return (
@@ -34,10 +35,10 @@ const PostList: React.FC = () => {
 }
 
 const CommentList: React.FC = () => {
-    const { data, isLoading } = useQuery({ queryKey: ["comments", 5], queryFn:() => getComments(5) });
+    const { data, isLoading } = useQuery({ queryKey: ["dashboardComments"], queryFn:() => getComments(5) });
 
     if (isLoading) {
-        return "Comments Loading...";
+        return <Spinner text="Comments Loading" />
     }
 
     return (

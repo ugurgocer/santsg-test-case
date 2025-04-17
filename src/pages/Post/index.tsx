@@ -5,16 +5,22 @@ import getPost from "@/api/Post/getPost";
 import useNav from "@/router/useNav";
 import React from "react";
 import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 const Post: React.FC = () => {
     const { id } = useParams();
     const nav = useNav();
     const location = useLocation();
 
-    const { data, isLoading } = useQuery({ queryKey: ["post"+id], queryFn:() => getPost(id as string) });
+    const { data, isLoading } = useQuery({
+        queryKey: ["post"+id],
+        queryFn:() => getPost(id as string),
+        staleTime: 1000 * 30,
+        gcTime: 1000 * 60 * 5
+    });
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <Spinner />
     }
 
     return (

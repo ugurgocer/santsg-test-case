@@ -3,9 +3,10 @@ import IPost from "@/types/IPost";
 type IProps = {
     data?: IPost;
     onSubmit: (data: IPost) => void;
+    loading?: boolean
 }
 
-const PostForm: React.FC<IProps> = ({ data, onSubmit }) => {
+const PostForm: React.FC<IProps> = ({ data, onSubmit, loading }) => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -35,7 +36,7 @@ const PostForm: React.FC<IProps> = ({ data, onSubmit }) => {
                     defaultValue={data?.body}
                 />
             </div>
-            <input type="submit" value="Submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded py-1 px-2 cursor-pointer" />
+            <input disabled={loading} type="submit" value="Submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded py-1 px-2 cursor-pointer disabled:cursor-progress disabled:bg-gray-300" />
         </form>
     );
 }
