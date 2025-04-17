@@ -3,15 +3,18 @@ import React from "react";
 import useNav from "@/router/useNav";
 import Button from "@/components/Button";
 import IUser from "@/types/IUser";
+import { useToast } from "@/context/ToastContext";
 
 const Layout: React.FC<React.PropsWithChildren>= ({ children }) => {
     const queryClient = useQueryClient();
     const user: IUser | undefined = queryClient.getQueryData(["user"]);
     const nav = useNav();
+    const { showToast } = useToast();
 
     const logout = () => {
         queryClient.removeQueries({ queryKey: ["user"] });
 
+        showToast("You are logged out. Redirecting login page...");
         nav.login.go({}, { replace: true });
     };
 

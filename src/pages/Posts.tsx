@@ -28,7 +28,8 @@ const Posts: React.FC = () => {
             queryClient.setQueryData(['posts'], (oldData: IPost[]) => oldData?.filter((post) => post.id !== deletedId) || []);
 
             showToast("Post is deleted", "success");
-        }
+        },
+        onError: (error) => showToast(error.message)
     });
 
     const handleEdit = (id: number) => {

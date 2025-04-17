@@ -4,10 +4,12 @@ import PostForm from "@/forms/PostForm";
 import IPost from "@/types/IPost";
 import createPost from "@/api/Post/createPost";
 import useNav from "@/router/useNav";
+import { useToast } from "@/context/ToastContext";
 
 const CreatePost: React.FC = () => {
     const queryClient = useQueryClient();
     const nav = useNav();
+    const { showToast } = useToast();
 
     const createPostMutation = useMutation({
         mutationFn: (post: IPost) => createPost(post),
@@ -16,6 +18,7 @@ const CreatePost: React.FC = () => {
 
             nav.posts.go({ }, { replace: true });
         },
+        onError: (error) => showToast(error.message)
     });
 
     return (

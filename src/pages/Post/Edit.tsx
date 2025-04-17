@@ -6,11 +6,13 @@ import PostForm from "@/forms/PostForm";
 import Card from "@/components/Card";
 import editPost from "@/api/Post/editPost";
 import Spinner from "@/components/Spinner";
+import { useToast } from "@/context/ToastContext";
 
 const EditPost: React.FC = () => {
     const { id } = useParams(); 
     const { data, isLoading } = useQuery({ queryKey: ["post"+id], queryFn:() => getPost(id as string) });
     const queryClient = useQueryClient();
+    const { showToast } = useToast();
 
     if (isLoading) {
         return <Spinner text="Form Loading" />
@@ -21,6 +23,7 @@ const EditPost: React.FC = () => {
         onSuccess: (newPost) => {
             queryClient.setQueryData(['post'+newPost.id], newPost);
         },
+        onError: (error) => showToast(error.message)
     });
 
     return (
