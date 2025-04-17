@@ -86,15 +86,7 @@ const routes: RouteConfig[] = [
       element: Forbidden,
     },
     translations
-  },
-  {
-  name: 'notFound',
-  path: '*',
-  renderer: {
-    type: 'element',
-    element: Forbidden,
-  },
-}
+  }
 ];
 
 export default routes;

@@ -8,8 +8,7 @@ const dummyUser: IUser = {
     name: "John Doe",
     permissions: [
         EPermissions.VIEW_POSTS,
-        EPermissions.VIEW_COMMENTS,
-        EPermissions.EDIT_POST
+        EPermissions.VIEW_COMMENTS
     ]
 }
 
