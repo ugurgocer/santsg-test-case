@@ -1,4 +1,5 @@
 import IPost from "@/types/IPost";
+import { useToast } from "@/context/ToastContext";
 
 type IProps = {
     data?: IPost;
@@ -7,10 +8,17 @@ type IProps = {
 }
 
 const PostForm: React.FC<IProps> = ({ data, onSubmit, loading }) => {
+    const { showToast }  = useToast();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+
+        if(!formData.get("title") || !formData.get("body")) {
+            showToast("Please check the form and fill the fields", "error")
+            return;
+        }
+
         const post: IPost = {
             id: data?.id || 0,
             title: formData.get("title") as string,

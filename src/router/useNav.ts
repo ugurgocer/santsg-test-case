@@ -3,9 +3,11 @@ import INav, { INavMethodArguments } from '@/types/INav';
 import { generatePath, NavigateOptions, useNavigate } from 'react-router-dom';
 import checkPermission from '@/helpers/checkPermissions';
 import IRouteConfig from '@/types/IRouteConfig';
+import { useToast } from '@/context/ToastContext';
 
 const useNav = (): INav => {
     const navigate = useNavigate();
+    const { showToast }  = useToast();
 
     const go = (route: IRouteConfig, args: INavMethodArguments = {}, options?: NavigateOptions) => {
         const permission = checkPermission(route);
@@ -13,7 +15,7 @@ const useNav = (): INav => {
         if(permission)
             navigate(generatePath(route.path, args), options);
         else
-            alert("You don't have permission to access this page.");
+            showToast("You don't have permission to access this page.", 'error');
     }
 
     const nav: INav = {};

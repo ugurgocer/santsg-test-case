@@ -7,10 +7,14 @@ import IPost from "@/types/IPost";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
+import { useConfirm } from "@/context/ConfirmContext";
+import { useToast } from "@/context/ToastContext";
 
 const Posts: React.FC = () => {
     const queryClient = useQueryClient();
     const nav = useNav();
+    const confirm = useConfirm();
+    const { showToast } = useToast();
 
     const { data, isLoading } = useQuery({
         queryKey: ["posts"],
@@ -22,12 +26,24 @@ const Posts: React.FC = () => {
         mutationFn: (id: number) => deletePost(id).then(() => id),
         onSuccess: (deletedId) => {
             queryClient.setQueryData(['posts'], (oldData: IPost[]) => oldData?.filter((post) => post.id !== deletedId) || []);
-            queryClient.invalidateQueries({ queryKey: ["post", deletedId] });
+
+            showToast("Post is deleted", "success");
         }
     });
 
     const handleEdit = (id: number) => {
         nav.editPost.go({ id });
+    }
+
+    const handleDelete =(id: number) => {
+        confirm({
+            message: "Are you sure you want to delete this post?",
+            onResponse: (result: boolean) => {
+                if(result) {
+                    deletePostMutation.mutate(id);
+                }
+            }
+        })
     }
 
     if(isLoading) return <Spinner text="Posts loading" />
@@ -57,7 +73,7 @@ const Posts: React.FC = () => {
                                     key: "delete",
                                     title: "Delete",
                                     type: "danger",
-                                    onClick: () => deletePostMutation.mutate(post.id)
+                                    onClick: () => handleDelete(post.id)
                                 }
                             ]
                         }
